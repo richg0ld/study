@@ -140,65 +140,65 @@
 
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
-var $WIN = $(window),
-    $BODY = $("body, html"),
-    $WRAP = $("#wrap"),
-    bodyWidth = 0,
-    wrapHeight = 0,
-    $SCENES = [
-        $(".intro"), $(".story"),
-        $(".field"), $(".character"),
-        $(".mission"), $(".monster"), $(".weapon"), $(".history")
-    ],
-    $contents = $(".contents"),
-    $sideLink = $(".side_link"),
-    $sideList = $(".side_list li")
+    var $WIN = $(window),
+        $BODY = $("body, html"),
+        $WRAP = $("#wrap"),
+        bodyWidth = 0,
+        wrapHeight = 0,
+        $SCENES = [
+            $(".intro"), $(".story"),
+            $(".field"), $(".character"),
+            $(".mission"), $(".monster"), $(".weapon"), $(".history")
+        ],
+        $contents = $(".contents"),
+        $sideLink = $(".side_link"),
+        $sideList = $(".side_list li")
 
-//내비게이션
-$sideLink.on("click", function(e){
-    e.preventDefault();
-    $sideList.removeClass("active");
-    $(this).closest("li").addClass("active");
+    //내비게이션
+    $sideLink.on("click", function(e){
+        e.preventDefault();
+        $sideList.removeClass("active");
+        $(this).closest("li").addClass("active");
 
-    $contents.eq(0).children().removeClass("on");
-    $contents.eq(0).children( $(this).attr("href") ).addClass("on");
-});
-
-//리사이징
-(function setContentsDelay(){
-    var transitionDelayValue = 0;
-    $.each($SCENES, function(i, v){
-        v.css({ "transition-delay": (transitionDelayValue+=0.04)+"s" });
+        $contents.eq(0).children().removeClass("on");
+        $contents.eq(0).children( $(this).attr("href") ).addClass("on");
     });
-})();
 
-function contentsResizing( bodyWidth ){
-    $.each($SCENES, function(i, v){
-        v.css({ "transform": "scale("+bodyWidth/1200+", "+bodyWidth/1200+")" });
-    });
-}
+    //리사이징
+    (function setContentsDelay(){
+        var transitionDelayValue = 0;
+        $.each($SCENES, function(i, v){
+            v.css({ "transition-delay": (transitionDelayValue+=0.04)+"s" });
+        });
+    })();
 
-function makeHeight( bodyWidth ){
-    return bodyWidth*(890/1200);
-}
+    function contentsResizing( bodyWidth ){
+        $.each($SCENES, function(i, v){
+            v.css({ "transform": "scale("+bodyWidth/1200+", "+bodyWidth/1200+")" });
+        });
+    }
 
-function setWrapHeight( wrapHeight ){
-    $WRAP.height(wrapHeight);
-}
+    function makeHeight( bodyWidth ){
+        return bodyWidth*(890/1200);
+    }
 
-function layoutRelocation( bodyWidth, wrapHeight ){
-     setWrapHeight(wrapHeight);
-    contentsResizing(bodyWidth);
-}
+    function setWrapHeight( wrapHeight ){
+        $WRAP.height(wrapHeight);
+    }
 
-function render(){
-    bodyWidth = $BODY.width();
-    wrapHeight = makeHeight(bodyWidth);
-    bodyWidth>1200 ? layoutRelocation(bodyWidth, wrapHeight) : layoutRelocation(1200, 890);
-}
+    function layoutRelocation( bodyWidth, wrapHeight ){
+         setWrapHeight(wrapHeight);
+        contentsResizing(bodyWidth);
+    }
 
-render();
-$WIN.on("resize", render);
+    function render(){
+        bodyWidth = $BODY.width();
+        wrapHeight = makeHeight(bodyWidth);
+        bodyWidth>1200 ? layoutRelocation(bodyWidth, wrapHeight) : layoutRelocation(1200, 890);
+    }
+
+    render();
+    $WIN.on("resize", render);
 </script>
 </body>
 </html>
